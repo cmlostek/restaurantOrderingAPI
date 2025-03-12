@@ -1,3 +1,8 @@
+You can run the necessary file to install dependencies for you: 
+
+install_deps.bat for WSL
+pipeline.sh for MacOS. 
+
 ### Installing necessary packages:  
 * `pip install fastapi`
 * `pip install "uvicorn[standard]"`  
