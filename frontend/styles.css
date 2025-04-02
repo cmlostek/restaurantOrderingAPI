@@ -88,3 +88,12 @@ button {
 button:hover {
     background: #0056b3;
 }
+
+.moodboard {
+    margin: auto;
+    height: 300px;
+    width: 300px;
+    background: #eaeaea;
+    display: flex;
+    padding-bottom: 5px;
+}
