@@ -89,11 +89,31 @@ button:hover {
     background: #0056b3;
 }
 
-.moodboard {
-    margin: auto;
-    height: 300px;
-    width: 300px;
-    background: #eaeaea;
-    display: flex;
-    padding-bottom: 5px;
+#toya-profile-pic{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 10px 0;
+}
+
+#toya-moodboard {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+#toya-profile-pic:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    transition-timing-function: ease-in-out;
+    opacity: 0.5;
+}
+
+#toya-moodboard:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    transition-timing-function: ease-in-out;
+    color: #555555;
+    opacity: 0.5;
 }
