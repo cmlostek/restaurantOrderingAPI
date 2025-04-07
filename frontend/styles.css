@@ -146,3 +146,13 @@ button:hover {
     color: #555555;
     opacity: 0.5;
 }
+.danielle-pic{
+    width:230px;
+    height:230px;
+}
+p .danielle-pic:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    transition-timing-function: ease-in-out;
+    border: 3px dotted steelblue;
+}
