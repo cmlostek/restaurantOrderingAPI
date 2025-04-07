@@ -55,7 +55,7 @@ header nav button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin: 10px;
     padding: 20px;
-    flex: 1 1 calc(30% - 40px);
+    flex: 0 0 40%;
     text-align: center;
     transition: transform 0.2s;
 }
@@ -89,6 +89,35 @@ button:hover {
     background: #0056b3;
 }
 
+#toya-profile-pic{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 10px 0;
+}
+
+#toya-moodboard {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+#toya-profile-pic:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    transition-timing-function: ease-in-out;
+    opacity: 0.5;
+}
+
+#toya-moodboard:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    transition-timing-function: ease-in-out;
+    color: #555555;
+    opacity: 0.5;
+}
+
 #cole{
     width: 200px;
     height: 200px;
@@ -111,6 +140,62 @@ button:hover {
 }
 
 #cole_moodboard:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    transition-timing-function: ease-in-out;
+    color: #555555;
+    opacity: 0.5;
+}
+#danielle-profile-pic{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin:5px 0;
+}
+#danielle-profile-pic:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    transition-timing-function: ease-in-out;
+    border: 3px dotted steelblue;
+}
+
+#danielle-moodboard {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+#danielle-moodboard:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    transition-timing-function: ease-in-out;
+    color: #555555;
+    opacity: 0.5;
+}
+
+#kristen-profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 5px 0;
+}
+
+#kristen-profile-pic:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    transition-timing-function: ease-in-out;
+    border: 3px dotted steelblue;
+}
+
+#kristen-moodboard {
+    width: 90%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 12px;
+}
+
+#kristen-moodboard:hover{
     transform: scale(1.1);
     transition: transform 0.3s;
     transition-timing-function: ease-in-out;
