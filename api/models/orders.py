@@ -15,3 +15,4 @@ class Order(Base):
     order_status = Column(String(50))
     total_price = Column(DECIMAL(10, 2))
     order_details = Column(String(300))
+

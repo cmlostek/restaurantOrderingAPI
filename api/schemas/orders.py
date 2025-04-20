@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 
 class OrderSchema(BaseModel):
@@ -14,3 +14,12 @@ class OrderSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+class GuestOrderItem(BaseModel):
+    product_id: int
+    quantity: int
+
+class GuestOrderCreate(BaseModel):
+    items: List[GuestOrderItem]
+    total_price: float
+    guest_email: str
