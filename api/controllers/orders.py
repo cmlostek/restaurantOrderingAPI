@@ -2,8 +2,8 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
-from .users import OrderItem
-from ..models.orders import Order
+
+from ..models.orders import Order, OrderItem
 from ..schemas.orders import OrderSchema, GuestOrderCreate
 
 
@@ -40,13 +40,13 @@ def delete_order(db: Session, order_id: int):
 def create_guest_order(db: Session, request: GuestOrderCreate):
     new_order = Order(
         total_price=request.total_price,
-        user_name="guest",  # Assuming guest orders don't have a user name
-        user_id=None,  # Assuming guest orders don't have a user ID
-        order_date=datetime.utcnow(),
+        user_name="guest",
+        user_id=1,
+        order_date=datetime.now(),
         order_status="Pending",
         order_details="This is a guest order",
         dish_id=request.dish_id,
-        order_id=None
+        order_id=1
     )
     db.add(new_order)
     db.commit()
@@ -55,7 +55,7 @@ def create_guest_order(db: Session, request: GuestOrderCreate):
 
     for item in request.items:
         order_item = OrderItem(
-            order_id=new_order.id,
+            order_id=new_order.order_id,
             product_id=item.product_id,
             quantity=item.quantity
         )
