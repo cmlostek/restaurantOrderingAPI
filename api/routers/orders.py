@@ -5,9 +5,8 @@ from ..controllers.orders import (
     get_all_orders,
     get_order_by_id,
     update_order,
-    delete_order,
+    delete_order, create_guest_order,
 )
-from ..controllers.orders import create_guest_order
 from ..schemas.orders import OrderSchema, GuestOrderCreate
 from ..dependencies.database import get_db
 

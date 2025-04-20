@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
-
+from .users import OrderItem
 from ..models.orders import Order, OrderItem
 from ..schemas.orders import OrderSchema, GuestOrderCreate
 
@@ -37,7 +37,7 @@ def delete_order(db: Session, order_id: int):
     return order
 
 
-def create_guest_order(db: Session, request: GuestOrderCreate):
+def create_guest_order(db: Session, request: Order):
     new_order = Order(
         total_price=request.total_price,
         user_name="guest",
@@ -55,7 +55,6 @@ def create_guest_order(db: Session, request: GuestOrderCreate):
 
     for item in request.items:
         order_item = OrderItem(
-            order_id=new_order.order_id,
             product_id=item.product_id,
             quantity=item.quantity
         )

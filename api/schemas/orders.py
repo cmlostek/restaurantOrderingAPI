@@ -21,5 +21,6 @@ class GuestOrderItem(BaseModel):
 
 class GuestOrderCreate(BaseModel):
     items: List[GuestOrderItem]
+    dish_id: int
     total_price: float
     guest_email: str
