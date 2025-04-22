@@ -6,7 +6,7 @@ class menuSchema(BaseModel):
     dish_id: int
     dish: str
     price: float
-    ingredients: str
+    ingredients: list[int]  # Accept a list of resource IDs
     calories: int
     category: str
 

@@ -6,6 +6,7 @@ from ..controllers.menu import (
     get_menu_item_by_id,
     update_menu_item,
     delete_menu_item,
+    serialize_menu
 )
 from ..schemas.menu import menuSchema
 from ..dependencies.database import get_db
@@ -21,14 +22,15 @@ def create_new_menu_item(request: menuSchema, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=list[menuSchema])
 def read_all_menu_items(db: Session = Depends(get_db)):
-    return get_all_menu_items(db)
+    menus = get_all_menu_items(db)
+    return [serialize_menu(menu_obj) for menu_obj in menus]
 
 @router.get("/{item_id}", response_model=menuSchema)
 def read_menu_item_by_id(item_id: int, db: Session = Depends(get_db)):
     item = get_menu_item_by_id(db, item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Menu item not found")
-    return item
+    return serialize_menu(item)
 
 @router.put("/{item_id}", response_model=menuSchema)
 def update_existing_menu_item(item_id: int, request: menuSchema, db: Session = Depends(get_db)):
