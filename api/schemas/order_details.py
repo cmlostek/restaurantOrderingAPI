@@ -3,6 +3,7 @@ from typing import List, Optional
 
 
 class OrderDetail(BaseModel):
+    detail_id: int
     order_id: int
     dish_id: int
     payment_id: int

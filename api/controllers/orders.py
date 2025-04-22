@@ -1,4 +1,3 @@
-from datetime import datetime
 
 from sqlalchemy.orm import Session
 
@@ -35,30 +34,3 @@ def delete_order(db: Session, order_id: int):
         db.delete(order)
         db.commit()
     return order
-
-
-def create_guest_order(db: Session, request: Order):
-    new_order = Order(
-        total_price=request.total_price,
-        user_name="guest",
-        user_id=1,
-        order_date=datetime.now(),
-        order_status="Pending",
-        order_details="This is a guest order",
-        dish_id=request.dish_id,
-        order_id=1
-    )
-    db.add(new_order)
-    db.commit()
-    db.refresh(new_order)
-
-
-    for item in request.items:
-        order_item = OrderItem(
-            product_id=item.product_id,
-            quantity=item.quantity
-        )
-        db.add(order_item)
-    db.commit()
-
-    return new_order
