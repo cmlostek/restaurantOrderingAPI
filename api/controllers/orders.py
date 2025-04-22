@@ -3,8 +3,8 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from .users import OrderItem
-from ..models.orders import Order, OrderItem
-from ..schemas.orders import OrderSchema, GuestOrderCreate
+from ..models.orders import Order
+from ..schemas.orders import OrderSchema
 
 
 def create_order(db: Session, request: OrderSchema):
