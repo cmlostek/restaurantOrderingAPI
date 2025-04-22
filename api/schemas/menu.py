@@ -9,8 +9,6 @@ class menuSchema(BaseModel):
     ingredients: str
     calories: int
     category: str
-    promotion_code: str
-    promotion_expiry: datetime
 
     class Config:
         orm_mode = True
