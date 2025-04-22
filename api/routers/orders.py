@@ -7,7 +7,7 @@ from ..controllers.orders import (
     update_order,
     delete_order, create_guest_order,
 )
-from ..schemas.orders import OrderSchema, GuestOrderCreate
+from ..schemas.orders import OrderSchema
 from ..dependencies.database import get_db
 
 router = APIRouter(
@@ -44,6 +44,3 @@ def delete_existing_order(order_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Order not found")
     return order
 
-@router.post("/guest-checkout")
-def guest_checkout(request: GuestOrderCreate, db: Session = Depends(get_db)):
-    return create_guest_order(db, request)

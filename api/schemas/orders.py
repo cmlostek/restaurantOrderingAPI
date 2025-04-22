@@ -7,9 +7,7 @@ class OrderSchema(BaseModel):
     user_id: int
     dish_id: int
     order_date: datetime
-    order_status: str
     total_price: float
-    order_details: Optional[str]
     is_guest: bool = False
 
     class Config:
