@@ -8,4 +8,4 @@ class resources(Base):
     resource_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     resource_name = Column(String(100), nullable=False)
     resource_type = Column(String(50), nullable=False)
-    quantity = Column(Integer, nullable=False)
+    quantity_available = Column(Integer, nullable=False)
