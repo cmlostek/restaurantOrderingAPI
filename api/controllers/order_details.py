@@ -1,6 +1,5 @@
-from sqlalchemy import Session
+from sqlalchemy.orm import Session
 from datetime import datetime
-from ..models.orders import Order
 from ..schemas.order_details import  OrderDetail
 
 
