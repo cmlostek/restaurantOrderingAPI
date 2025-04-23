@@ -1,17 +1,10 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from ..models.users import User
-from ..schemas.users import usersSchema
 from sqlalchemy.exc import SQLAlchemyError
 
-import api.models.users as model  # SQLAlchemy User model
-from api.schemas.users import usersSchema  # Pydantic schema
+import api.models.user as model  # SQLAlchemy User model
+from api.schemas.user import User  # Pydantic schema
 
-def create_user(db: Session, request: usersSchema):
-    new_user = usersSchema(**request.dict())
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
 
 def create(db: Session, request: User):
     new_user = model.User(
@@ -33,11 +26,7 @@ def create(db: Session, request: User):
 
     return new_user
 
-def get_all_users(db: Session):
-    return db.query(usersSchema).all()
 
-def get_user_by_id(db: Session, user_id: str):
-    return db.query(usersSchema).filter(usersSchema.user_id == user_id).first()
 def read_all(db: Session):
     try:
         result = db.query(model.User).all()
@@ -46,13 +35,6 @@ def read_all(db: Session):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
 
-def update_user(db: Session, user_id: str, request: usersSchema):
-    user = db.query(usersSchema).filter(usersSchema.user_id == user_id).first()
-    if user:
-        for key, value in request.dict().items():
-            setattr(user, key, value)
-        db.commit()
-        db.refresh(user)
 
 def read_one(db: Session, user_id: int):
     try:
@@ -64,10 +46,6 @@ def read_one(db: Session, user_id: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return user
 
-def delete_user(db: Session, user_id: str):
-    user = db.query(usersSchema).filter(usersSchema.user_id == user_id).first()
-    if user:
-        db.delete(user)
 
 def update(db: Session, user_id: int, request: User):
     try:
@@ -77,11 +55,10 @@ def update(db: Session, user_id: int, request: User):
         update_data = request.dict(exclude_unset=True)
         user.update(update_data, synchronize_session=False)
         db.commit()
-           # return user
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return usersSchema.first()
+    return user.first()
 
 
 def delete(db: Session, user_id: int):
