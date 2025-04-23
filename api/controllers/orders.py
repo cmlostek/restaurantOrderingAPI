@@ -1,7 +1,6 @@
 
 from sqlalchemy.orm import Session
 
-from .users import OrderItem
 from ..models.orders import Order
 from ..schemas.orders import OrderSchema
 

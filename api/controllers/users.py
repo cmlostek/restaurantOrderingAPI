@@ -2,11 +2,11 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-import api.models.user as model  # SQLAlchemy User model
-from api.schemas.user import User  # Pydantic schema
+from ..models.users import  User as model # SQLAlchemy User model
+from ..schemas.users import usersSchema as User# Pydantic schema
 
 
-def create(db: Session, request: User):
+def create_user(db: Session, request: User):
     new_user = model.User(
         user_name=request.user_name,
         email=request.email,
@@ -27,7 +27,7 @@ def create(db: Session, request: User):
     return new_user
 
 
-def read_all(db: Session):
+def get_all_users(db: Session):
     try:
         result = db.query(model.User).all()
     except SQLAlchemyError as e:
@@ -36,7 +36,7 @@ def read_all(db: Session):
     return result
 
 
-def read_one(db: Session, user_id: int):
+def get_user_by_id(db: Session, user_id: int):
     try:
         user = db.query(model.User).filter(model.User.user_id == user_id).first()
         if not user:
@@ -47,7 +47,7 @@ def read_one(db: Session, user_id: int):
     return user
 
 
-def update(db: Session, user_id: int, request: User):
+def update_user(db: Session, user_id: int, request: User):
     try:
         user = db.query(model.User).filter(model.User.user_id == user_id)
         if not user.first():
@@ -61,7 +61,7 @@ def update(db: Session, user_id: int, request: User):
     return user.first()
 
 
-def delete(db: Session, user_id: int):
+def delete_user(db: Session, user_id: int):
     try:
         user = db.query(model.User).filter(model.User.user_id == user_id)
         if not user.first():

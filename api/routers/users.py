@@ -1,43 +1,45 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from api.controllers.order_details import get_all_order_details, get_order_detail_by_id, update_order_detail
+from api.controllers.order_details import get_order_detail_by_id, update_order_detail
+from api.controllers.users import get_all_users, get_user_by_id, create_user, update_user, delete_user
 from api.schemas.order_details import OrderDetail
 
-
+from ..schemas.users import usersSchema
 from ..schemas.order_details import OrderDetail
 from api.dependencies.database import get_db
 
 router = APIRouter(
-    prefix="/users",tags=["users"]
+    prefix="/users", tags=["users"]
 )
-@router.get("/", response_model=List[User])
-def get_all_users(user_id: int,db: Session = Depends(get_db)):
-    user_details = get_all_order_details(db, user_id)
+
+@router.get("/", response_model=list[usersSchema])
+def get_all_users(db: Session = Depends(get_db)):
+    user_details = get_all_users(db)
     if not user_details:
-        raise HTTPException(status_code=404,detail="No users found for your ID")
+        raise HTTPException(status_code=404, detail="No users found")
     return user_details
 
-@router.get("/{user_id}", response_model=User)
-def get_user_detail(user_id: int, detail_id: int, db: Session = Depends(get_db)):
-    user_detail = get_user_by_id(db, user_id, detail_id)
+@router.get("/{user_id}", response_model=usersSchema)
+def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
+    user_detail = get_user_by_id(db, user_id)
     if not user_detail:
-        raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")
+        raise HTTPException(status_code=404, detail=f"User with ID {user_id} not found")
     return user_detail
 
-@router.post("/", response_model=User)
-def create_user_detail(request: User, user_id: int, db: Session = Depends(get_db)):
-    return create_user(request, user_id, db)
+@router.post("/", response_model=usersSchema)
+def create_user(request: usersSchema, db: Session = Depends(get_db)):
+    return create_user(request, db)
 
-@router.put("/{detail_id}", response_model=User)
-def update_user_detail(user_id: int, detail_id: int, request: User, db: Session = Depends(get_db)):
+@router.put("/{detail_id}", response_model=usersSchema)
+def update_user(user_id: int, detail_id: int, request: usersSchema, db: Session = Depends(get_db)):
     user_detail = update_user(db, user_id, detail_id, request)
     if not user_detail:
         raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")
     return user_detail
 
 @router.delete("/{detail_id}")
-def delete_user_detail(user_id: int, detail_id: int, db: Session = Depends(get_db)):
+def delete_user(user_id: int, detail_id: int, db: Session = Depends(get_db)):
     result = delete_user(db, user_id, detail_id)
     if not result:
         raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")
