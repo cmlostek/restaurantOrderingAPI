@@ -4,11 +4,11 @@ from typing import List
 
 from api.schemas.review import Review
 from api.controllers.review import (
-    get_all_reviews_by_user,
-    get_review_by_id,
-    create_review,
-    update_review,
-    delete_review
+    read_all   as get_all_reviews_by_user,
+    read_one   as get_review_by_id,
+    create     as create_review,
+    update     as update_review,
+    delete     as delete_review,
 )
 from api.dependencies.database import get_db
 
