@@ -23,12 +23,6 @@ def create_new_order(request: OrderSchema, db: Session = Depends(get_db)):
 def read_all_orders(db: Session = Depends(get_db)):
     return get_all_orders(db)
 
-@router.get("/{order_id}", response_model=OrderSchema)
-def read_order_by_id(order_id: int, db: Session = Depends(get_db)):
-    order = get_order_by_id(db, order_id)
-    if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
-    return order
 
 @router.put("/{order_id}", response_model=OrderSchema)
 def update_existing_order(order_id: int, request: OrderSchema, db: Session = Depends(get_db)):
@@ -43,3 +37,4 @@ def delete_existing_order(order_id: int, db: Session = Depends(get_db)):
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
+
