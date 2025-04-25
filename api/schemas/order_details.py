@@ -9,8 +9,6 @@ class OrderDetail(BaseModel):
     payment_id: int
     order_details: Optional[str]
     order_status: str  # Pending, Completed, Canceled
-    quantity: int # Number of items ordered
-    ingredients: List[int]  # List of ingredients
 
     class Config:
         orm_mode = True

@@ -12,5 +12,3 @@ class OrderDetails(Base):
     payment_id = Column(Integer, ForeignKey("payments.payment_id"))
     order_details = Column(String(300), nullable=False)
     order_status = Column(String(50), nullable=False)  # Pending, Completed, Canceled
-    quantity = Column(Integer, nullable=False)
-    ingredients = Column(String(300), nullable=False)  # Comma-separated list of ingredient IDs
