@@ -39,6 +39,7 @@ def test_create_order_detail(db_session, mocker):
 def test_update_order_detail(db_session, mocker):
     mock_update_order_detail = mocker.patch.object(controller, 'update_order_detail', return_value=model.OrderDetail(id=1, order_id=1, dish_id=1, quantity=2))
     order_detail_update_request = {
+        "detail_id": 1,
         "order_id": 1,
         "dish_id": 1,
         "quantity": 2

@@ -55,6 +55,7 @@ def test_update_existing_order(db_session, mocker):
     mock_update_order = mocker.patch.object(controller, 'update_order', return_value=model.Order(id=1, name="Updated Order"))
 
     order_update_request = {
+        "order_id": 1,
         "user_id": 1,
         "dish_id": 1,
         "name": "Updated Order",
