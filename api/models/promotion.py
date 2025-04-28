@@ -10,5 +10,5 @@ class Promotion(Base):
     description        = Column(String(200), nullable=True)
     discount_percentage= Column(Integer, nullable=False)
     valid_until        = Column(DateTime(timezone=True), nullable=False)
-    payment_id         = Column(Integer, ForeignKey("payment.payment_id"), nullable=False)
+    payment_id         = Column(Integer, ForeignKey("payments.payment_id"), nullable=False)
 
