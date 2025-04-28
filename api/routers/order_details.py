@@ -49,6 +49,6 @@ def update_order_detail_route(
             detail=f"Order detail with ID {detail_id} not found for order {order_id}"
         )
 
-    return
+    return order_detail
 
 
