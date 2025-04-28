@@ -2,6 +2,9 @@ from sqlalchemy.orm import Session
 from ..models.payment import Payment
 from ..schemas.payment import PaymentCreate, PaymentUpdate
 
+def get_all_payments(db: Session):
+    return db.query(Payment).all()
+
 def create_payment(db: Session, data: PaymentCreate) -> Payment:
     obj = Payment(**data.dict())
     db.add(obj); db.commit(); db.refresh(obj)

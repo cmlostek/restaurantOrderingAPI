@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..controllers.payment import (
     create_payment,
+    get_all_payments,
     get_payment_by_id,
     update_payment,
     delete_payment,
@@ -10,6 +11,13 @@ from ..schemas.payment import PaymentCreate, PaymentSchema, PaymentUpdate
 from ..dependencies.database import get_db
 
 router = APIRouter(prefix="/payments", tags=["payments"])
+
+@router.get("/", response_model=list[PaymentSchema])
+def read_all_payments(db: Session = Depends(get_db)):
+    payments = get_all_payments(db)
+    if not payments:
+        raise HTTPException(status_code=404, detail="No payments found")
+    return payments
 
 @router.post("/", response_model=PaymentSchema)
 def create_new_payment(request: PaymentCreate, db: Session = Depends(get_db)):

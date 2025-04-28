@@ -8,7 +8,7 @@ class OrderSchema(BaseModel):
     dish_id: int
     order_date: datetime
     total_price: float
-    is_guest: bool = False
+    is_guest: int = 1
 
     class Config:
         orm_mode = True

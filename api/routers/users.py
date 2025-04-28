@@ -14,32 +14,32 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=list[usersSchema])
-def get_all_users(db: Session = Depends(get_db)):
+def read_all_users(db: Session = Depends(get_db)):
     user_details = get_all_users(db)
     if not user_details:
         raise HTTPException(status_code=404, detail="No users found")
     return user_details
 
 @router.get("/{user_id}", response_model=usersSchema)
-def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
+def read_user_by_id(user_id: int, db: Session = Depends(get_db)):
     user_detail = get_user_by_id(db, user_id)
     if not user_detail:
         raise HTTPException(status_code=404, detail=f"User with ID {user_id} not found")
     return user_detail
 
 @router.post("/", response_model=usersSchema)
-def create_user(request: usersSchema, db: Session = Depends(get_db)):
+def create_new_user(request: usersSchema, db: Session = Depends(get_db)):
     return create_user(request, db)
 
 @router.put("/{detail_id}", response_model=usersSchema)
-def update_user(user_id: int, detail_id: int, request: usersSchema, db: Session = Depends(get_db)):
+def update_existing_user(user_id: int, detail_id: int, request: usersSchema, db: Session = Depends(get_db)):
     user_detail = update_user(db, user_id, detail_id, request)
     if not user_detail:
         raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")
     return user_detail
 
 @router.delete("/{detail_id}")
-def delete_user(user_id: int, detail_id: int, db: Session = Depends(get_db)):
+def delete_existing_user(user_id: int, detail_id: int, db: Session = Depends(get_db)):
     result = delete_user(db, user_id, detail_id)
     if not result:
         raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")

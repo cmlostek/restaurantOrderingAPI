@@ -1,6 +1,13 @@
-from sqlalchemy import Column, Integer, DECIMAL, ForeignKey, DateTime, func
+from sqlalchemy import Column, Integer, DECIMAL, ForeignKey, DateTime, func, Table
 from sqlalchemy.orm import relationship
 from ..dependencies.database import Base
+
+payment_promo = Table(
+    "payment_promo",
+    Base.metadata,
+    Column("payment_id", Integer, ForeignKey("payments.payment_id"), primary_key=True),
+    Column("promotion_id", Integer, ForeignKey("promotions.promotion_id"), primary_key=True),
+)
 
 class Payment(Base):
     __tablename__ = "payments"
@@ -10,7 +17,3 @@ class Payment(Base):
     promotion_id  = Column(Integer, ForeignKey("promotions.promotion_id"), nullable=True)
     amount        = Column(DECIMAL(10, 2), nullable=False)
     created_at    = Column(DateTime(timezone=True), server_default=func.now())
-
-    # relationships
-    user       = relationship("User",       back_populates="payments")
-    promotion  = relationship("Promotion",  back_populates="payment", uselist=False)

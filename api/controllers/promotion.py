@@ -2,6 +2,9 @@ from sqlalchemy.orm import Session
 from ..models.promotion import Promotion
 from ..schemas.promotion import PromotionCreate, PromotionUpdate
 
+def get_all_promotions(db: Session):
+    return db.query(Promotion).all()
+
 def create_promotion(db: Session, data: PromotionCreate) -> Promotion:
     obj = Promotion(**data.dict())
     db.add(obj); db.commit(); db.refresh(obj)

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..controllers.promotion import (
     create_promotion,
+    get_all_promotions,
     get_promotion_by_id,
     update_promotion,
     delete_promotion,
@@ -10,6 +11,13 @@ from ..schemas.promotion import PromotionCreate, PromotionSchema, PromotionUpdat
 from ..dependencies.database import get_db
 
 router = APIRouter(prefix="/promotions", tags=["promotions"])
+
+@router.get("/", response_model=list[PromotionSchema])
+def read_all_promotions(db: Session = Depends(get_db)):
+    promotions = get_all_promotions(db)
+    if not promotions:
+        raise HTTPException(status_code=404, detail="No promotions found")
+    return promotions
 
 @router.post("/", response_model=PromotionSchema)
 def create_new_promotion(request: PromotionCreate, db: Session = Depends(get_db)):

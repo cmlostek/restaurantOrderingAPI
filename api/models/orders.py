@@ -12,4 +12,4 @@ class Order(Base):
     dish_id = Column(Integer, ForeignKey("menu.dish_id"))
     order_date = Column(DATETIME, nullable=False, server_default=func.now())
     total_price = Column(DECIMAL(10, 2))
-    is_guest = Column(Boolean, default=False)
+    is_guest = Column(Integer, default=False)

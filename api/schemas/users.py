@@ -3,6 +3,7 @@ from typing import List, Optional
 
 class usersSchema(BaseModel):
     user_id: int
+    payment_id: int
     user_name: str
     email: str
     phone_number: int
@@ -11,7 +12,6 @@ class usersSchema(BaseModel):
     payment_info: str
     review: Optional[str]
     rating: Optional[str]
-    payment_id: int
 
 
     class Config:
