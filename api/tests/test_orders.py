@@ -25,7 +25,7 @@ def test_create_new_order(db_session, mocker):
         "name": "Test Order",
         "description": "This is a test order",
         "price": 100.0,
-        "quantity": 2
+        "quantity": 2,
         "is_guest": 1
     }
 
