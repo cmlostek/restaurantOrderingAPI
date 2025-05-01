@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from api.controllers.order_details import get_order_detail_by_id, update_order_detail
+from api.controllers.order_details import update_order_detail
 from api.controllers.users import get_all_users, get_user_by_id, create_user, update_user, delete_user
 from api.schemas.order_details import OrderDetail
 

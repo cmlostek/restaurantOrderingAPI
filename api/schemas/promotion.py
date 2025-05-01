@@ -6,7 +6,6 @@ class PromotionBase(BaseModel):
     description:         str
     discount_percentage: int
     valid_until:         datetime
-    payment_id:          int
 
 class PromotionCreate(PromotionBase):
     pass
