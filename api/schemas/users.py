@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class usersSchema(BaseModel):
     user_id: int
-    payment_id: int
+    # payment_id: int
     user_name: str
     email: str
     phone_number: int

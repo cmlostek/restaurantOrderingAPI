@@ -29,18 +29,18 @@ def read_user_by_id(user_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=usersSchema)
 def create_new_user(request: usersSchema, db: Session = Depends(get_db)):
-    return create_user(request, db)
+    return create_user(db, request)
 
-@router.put("/{detail_id}", response_model=usersSchema)
-def update_existing_user(user_id: int, detail_id: int, request: usersSchema, db: Session = Depends(get_db)):
-    user_detail = update_user(db, user_id, detail_id, request)
+@router.put("/{user_id}", response_model=usersSchema)
+def update_existing_user(user_id: int, request: usersSchema, db: Session = Depends(get_db)):
+    user_detail = update_user(db, user_id, request)
     if not user_detail:
-        raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")
+        raise HTTPException(status_code=404, detail=f"User with ID {user_id} not found")
     return user_detail
 
-@router.delete("/{detail_id}")
-def delete_existing_user(user_id: int, detail_id: int, db: Session = Depends(get_db)):
-    result = delete_user(db, user_id, detail_id)
+@router.delete("/{user_id}")
+def delete_existing_user(user_id: int, db: Session = Depends(get_db)):
+    result = delete_user(db, user_id)
     if not result:
-        raise HTTPException(status_code=404, detail=f"User with ID {detail_id} not found for user {user_id}")
+        raise HTTPException(status_code=404, detail=f"User with ID {user_id} not found")
     return {"detail": "User deleted successfully"}

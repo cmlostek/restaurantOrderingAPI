@@ -8,18 +8,16 @@ from ..models.payment import Payment as payments # SQLAlchemy Payment model
 
 
 def create_user(db: Session, request: User):
-    payment_object = db.query(model).filter(model.payment_id == payments.payment_id).first()
 
     new_user = model(
         user_id=request.user_id,
-        payment_id=payment_object.payment_id,
+        # payment_id=payment_object.payment_id,
         user_name=request.user_name,
         email=request.email,
         phone_number=request.phone_number,
         address=request.address,
         user_role=request.user_role,
         payment_info=request.payment_info,
-        review_id=request.review_id,
     )
 
     try:
@@ -27,7 +25,9 @@ def create_user(db: Session, request: User):
         db.commit()
         db.refresh(new_user)
     except SQLAlchemyError as e:
+        print("here", e)
         error = str(e.__dict__['orig'])
+        print("here", error)
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
     return new_user
