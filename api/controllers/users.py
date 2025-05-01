@@ -18,6 +18,8 @@ def create_user(db: Session, request: User):
         address=request.address,
         user_role=request.user_role,
         payment_info=request.payment_info,
+        review=request.review,
+        rating=request.rating
     )
 
     try:

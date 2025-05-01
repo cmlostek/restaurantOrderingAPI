@@ -15,7 +15,7 @@ class User(Base):
     # payment_id = Column(Integer, ForeignKey("payments.payment_id"))
     user_name = Column(String(100), nullable=False)
     email = Column(String(100), unique = True, nullable=False)
-    phone_number = Column(Integer, unique = True, nullable=False)
+    phone_number = Column(String(20), unique=True, nullable=False)
     address = Column(String(200), nullable=False)
     user_role = Column(String(100), nullable=False)
     payment_info = Column(String(200), nullable=False)
