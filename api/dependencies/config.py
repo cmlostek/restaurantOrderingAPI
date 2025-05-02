@@ -1,8 +1,8 @@
 class conf:
     db_host = "localhost"
-    db_name = "final_project_3155"
+    db_name = "database_name"
     db_port = 3306
     db_user = "root"
-    db_password = "CRyan#45!!"
+    db_password = "password"
     app_host = "localhost"
     app_port = 8000
