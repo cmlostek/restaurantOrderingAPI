@@ -113,3 +113,15 @@ def delete_menu_item(db: Session, item_id: int):
         return response_data
 
     raise HTTPException(status_code=404, detail="Menu item not found")
+
+def search_menu_items(db: Session, keyword: str):
+    items = db.query(menu).filter(menu.dish.ilike(f"%{keyword}%")).all()
+    if not items:
+        raise HTTPException(status_code=404, detail="No menu items found.")
+    return items
+
+def get_menu_items_by_category(db: Session, category: str):
+    items = db.query(menu).filter(menu.category == category).all()
+    if not items:
+        raise HTTPException(status_code=404, detail="No menu items found in this category.")
+    return items

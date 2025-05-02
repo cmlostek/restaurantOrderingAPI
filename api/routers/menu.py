@@ -6,7 +6,9 @@ from ..controllers.menu import (
     get_menu_item_by_id,
     update_menu_item,
     delete_menu_item,
-    serialize_menu
+    search_menu_items,
+    serialize_menu, get_menu_items_by_category
+
 )
 from ..schemas.menu import menuSchema
 from ..dependencies.database import get_db
@@ -45,3 +47,19 @@ def delete_existing_menu_item(item_id: int, db: Session = Depends(get_db)):
     if not item:
         raise HTTPException(status_code=404, detail="Menu item not found")
     return item
+
+@router.get("/search/{keyword}", response_model=list[menuSchema])
+def search_menu(keyword: str, db: Session = Depends(get_db)):
+    items = search_menu_items(db, keyword)
+    if not items:
+        raise HTTPException(status_code=404, detail="No menu items found")
+    return [serialize_menu(item) for item in items]
+
+@router.get("/category/{category}", response_model=list[menuSchema])
+def receive_menu_items_by_category(category: str, db: Session = Depends(get_db)):
+    items = get_menu_items_by_category(db, category)
+    if not items:
+        raise HTTPException(status_code=404, detail="No menu items found in this category")
+    return [serialize_menu(item) for item in items]
+
+
