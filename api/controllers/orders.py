@@ -1,4 +1,7 @@
+from datetime import datetime, time, date
+
 from fastapi import HTTPException
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from starlette import status
 
@@ -58,3 +61,22 @@ def delete_order(db: Session, order_id: int):
         db.delete(order)
         db.commit()
     return order
+
+def get_order_by_date(db: Session, order_date: str):
+    return db.query(Order).filter(Order.order_date == order_date).all()
+
+def filter_order_dates(db: Session, start_date: date, end_date: date):
+    start_dt = datetime.combine(start_date, time.min)
+    end_dt = datetime.combine(end_date, time.max)
+
+    orders = (
+        db.query(Order)
+        .filter(and_(
+            Order.order_date >= start_dt,
+            Order.order_date <= end_dt
+        ))
+        .all()
+    )
+    if not orders:
+        raise HTTPException(404, f"No orders between {start_date} and {end_date}")
+    return orders
