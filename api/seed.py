@@ -23,14 +23,31 @@ def seed_data(db: Session):
     # add menu to db
     db.add_all([
         menu.menu(
-            dish_id   = m["dish_id"],
-            dish      = m["dish"],
-            price     = m["price"],
-            calories  = m["calories"],
-            category  = m["category"]
+            dish_id=m["dish_id"],
+            dish=m["dish"],
+            price=m["price"],
+            calories=m["calories"],
+            category=m["category"]
         ) for m in load_json("menu.json")
     ])
     db.commit()
+
+    # add resources to db
+    db.add_all([resources.resources(**r) for r in load_json("resources.json")])
+    db.commit()
+
+    # backref menu with ingredients
+    for m in load_json("menu.json"):
+        dish_obj = db.query(menu.menu).get(m["dish_id"])
+        if dish_obj:
+            ing_objs = (
+                db.query(resources.resources)
+                  .filter(resources.resources.resource_id.in_(m["ingredients"]))
+                  .all()
+            )
+            dish_obj.ingredients = ing_objs
+    db.commit()
+
 
     # add orders to db
     db.add_all([orders.Order(**o) for o in load_json("orders.json")])
@@ -53,9 +70,7 @@ def seed_data(db: Session):
     db.commit()
 
 
-    # add resources to db
-    db.add_all([resources.resources(**r) for r in load_json("resources.json")])
-    db.commit()
+
 
 if __name__ == "__main__":
     session = SessionLocal()
