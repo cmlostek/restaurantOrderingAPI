@@ -15,12 +15,10 @@ def serialize_menu(menu_obj):
     }
 
 def create_menu_item(db: Session, request: menuSchema):
-    # Check if dish_id already exists (optional safeguard)
     existing = db.query(menu).filter(menu.dish_id == request.dish_id).first()
     if existing:
         raise HTTPException(status_code=400, detail="Dish with this ID already exists.")
 
-    # Fetch resources
     ingredient_objs = db.query(resources).filter(resources.resource_id.in_(request.ingredients)).all()
 
     if len(ingredient_objs) != len(request.ingredients):
@@ -34,9 +32,8 @@ def create_menu_item(db: Session, request: menuSchema):
         category=request.category
     )
     db.add(new_item)
-    db.commit()  # commit first so dish_id is available
+    db.commit()
 
-    # Now link ingredients
     db.refresh(new_item)
     new_item.ingredients = ingredient_objs
     db.commit()
