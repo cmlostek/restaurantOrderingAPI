@@ -1,12 +1,22 @@
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from uvicorn import lifespan
+
+from api.dependencies.database import SessionLocal
+from api.seed import seed_data
 from .routers import index as indexRoute
 from .models import model_loader
 from .dependencies.config import conf
 
-
 app = FastAPI()
+
+
+@app.on_event("startup")
+def on_startup():
+    db = SessionLocal()
+    seed_data(db)
+    db.close()
 
 origins = ["*"]
 
