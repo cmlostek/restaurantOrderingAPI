@@ -3,8 +3,6 @@ from sqlalchemy.orm import Session
 
 from api.controllers.order_details import get_all_order_details, update_order_detail, create_new_order_detail, \
     delete_order_detail, get_order_detail_by_id, delete_all_order_details
-from api.schemas.order_details import OrderDetail
-
 
 from ..schemas.order_details import OrderDetail
 from api.dependencies.database import get_db
