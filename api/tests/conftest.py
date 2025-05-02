@@ -25,6 +25,6 @@ def reset_and_seed_db():
 @pytest.fixture(scope="function")
 def client():
     """
-    Provides a TestClient connected to the freshly‐seeded DB.
+    Provides a TestClient connected to the FastAPI app
     """
     return TestClient(app)

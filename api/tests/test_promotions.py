@@ -9,9 +9,10 @@ from ..models.promotion import Promotion
 client = TestClient(app)
 
 
-@pytest.fixture
-def db_session(mocker):
-    return mocker.Mock()
+@pytest.fixture(scope='module')
+def seeded_client():
+    return client
+
 
 
 def test_read_all_promotions(db_session, mocker):
