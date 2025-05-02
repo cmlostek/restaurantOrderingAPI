@@ -1,0 +1,66 @@
+[
+    {
+        "detail_id": 1,
+        "order_id": 1,
+        "dish_id": 1,
+        "payment_id": 1,
+        "order_details": "Requested no mushrooms.",
+        "order_status": "Completed"
+    },
+    {
+        "detail_id": 2,
+        "order_id": 1,
+        "dish_id": 4,
+        "payment_id": 1,
+        "order_details": "Side of garlic bread added.",
+        "order_status": "Completed"
+    },
+    {
+        "detail_id": 3,
+        "order_id": 2,
+        "dish_id": 2,
+        "payment_id": 2,
+        "order_details": "Extra parmesan.",
+        "order_status": "Completed"
+    },
+    {
+        "detail_id": 4,
+        "order_id": 3,
+        "dish_id": 2,
+        "payment_id": 3,
+        "order_details": "No garlic bread.",
+        "order_status": "Completed"
+    },
+    {
+        "detail_id": 5,
+        "order_id": 3,
+        "dish_id": 3,
+        "payment_id": 3,
+        "order_details": "Added a salad.",
+        "order_status": "Completed"
+    },
+    {
+        "detail_id": 6,
+        "order_id": 4,
+        "dish_id": 1,
+        "payment_id": 4,
+        "order_details": "Takeout box needed.",
+        "order_status": "Processing"
+    },
+    {
+        "detail_id": 7,
+        "order_id": 4,
+        "dish_id": 3,
+        "payment_id": 4,
+        "order_details": "No cutlery needed.",
+        "order_status": "Processing"
+    },
+    {
+        "detail_id": 8,
+        "order_id": 4,
+        "dish_id": 4,
+        "payment_id": 4,
+        "order_details": "Spicy sauce on the side.",
+        "order_status": "Processing"
+    }
+]
