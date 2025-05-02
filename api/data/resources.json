@@ -1,0 +1,56 @@
+[
+  {
+    "resource_id": 1,
+    "resource_name": "Tomatoes",
+    "resource_type": "Produce",
+    "quantity_available": 50
+  },
+  {
+    "resource_id": 2,
+    "resource_name": "Mozzarella Cheese",
+    "resource_type": "Dairy",
+    "quantity_available": 20
+  },
+  {
+    "resource_id": 3,
+    "resource_name": "Ground Beef",
+    "resource_type": "Meat",
+    "quantity_available": 15
+  },
+  {
+    "resource_id": 4,
+    "resource_name": "Olive Oil",
+    "resource_type": "Herbs & Spices",
+    "quantity_available": 30
+  },
+  {
+    "resource_id": 6,
+    "resource_name": "Spaghetti Noodles",
+    "resource_type": "Dry Goods",
+    "quantity_available": 100
+  },
+  {
+    "resource_id": 7,
+    "resource_name": "Flour",
+    "resource_type": "Baking",
+    "quantity_available": 25
+  },
+  {
+    "resource_id": 9,
+    "resource_name": "Chicken Breast",
+    "resource_type": "Meat",
+    "quantity_available": 35
+  },
+  {
+    "resource_id": 10,
+    "resource_name": "Salt",
+    "resource_type": "Herbs & Spices",
+    "quantity_available": 40
+  },
+  {
+    "resource_id": 11,
+    "resource_name": "Pepper",
+    "resource_type": "Herbs & Spices",
+    "quantity_available": 40
+  }
+]

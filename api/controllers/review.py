@@ -2,8 +2,8 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-import api.models.review as model  # SQLAlchemy model for Review
-from api.schemas.review import Review  # Pydantic schema
+import api.models.review as model
+from api.schemas.review import Review
 
 
 def create(db: Session, request: Review, user_id: int):
@@ -25,16 +25,15 @@ def create(db: Session, request: Review, user_id: int):
     return new_review
 
 
-def read_all(db: Session, user_id: int):
+def read_all(db: Session):
     try:
-        result = db.query(model.Review).filter(model.Review.user_id == user_id).all()
-        if not result:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No reviews found for this user")
+        reviews = db.query(model.Review).all()
+        return reviews
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
-    return result
+
 
 
 def read_one(db: Session, user_id: int, review_id: int):

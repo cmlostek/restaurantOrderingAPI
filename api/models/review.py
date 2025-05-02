@@ -3,10 +3,12 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
 
+
+
 class Review(Base):
-    __tablename__ = 'review'
+    __tablename__ = 'reviews'
     review_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=True)
     order_id = Column(Integer, ForeignKey('orders.order_id'), nullable=False)
     rating = Column(Integer, nullable=False)
     comment = Column(String(500), nullable=False)

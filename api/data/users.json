@@ -1,0 +1,46 @@
+[
+  {
+    "user_id": 1,
+    "user_name": "alice_w",
+    "email": "alice@example.com",
+    "phone_number": "5551234567",
+    "address": "123 Garden Ave",
+    "user_role": "customer",
+    "payment_info": "card",
+    "review": "Loved the Chicken Alfredo!",
+    "rating": "5"
+  },
+  {
+    "user_id": 2,
+    "user_name": "chef_mario",
+    "email": "mario@kitchen.com",
+    "phone_number": "5552345678",
+    "address": "456 Chef Lane",
+    "user_role": "staff",
+    "payment_info": "N/A",
+    "review": "great place to eat",
+    "rating": null
+  },
+  {
+    "user_id": 3,
+    "user_name": "sarah_b",
+    "email": "sarah.b@example.org",
+    "phone_number": "5559876543",
+    "address": "789 Sunset Blvd",
+    "user_role": "customer",
+    "payment_info": "paypal",
+    "review": "Margherita Pizza was fresh and tasty.",
+    "rating": "4"
+  },
+  {
+    "user_id": 4,
+    "user_name": "admin_jake",
+    "email": "admin@restaurant.com",
+    "phone_number": "5550001122",
+    "address": "10 Admin St.",
+    "user_role": "admin",
+    "payment_info": "internal",
+    "review": null,
+    "rating": null
+  }
+]

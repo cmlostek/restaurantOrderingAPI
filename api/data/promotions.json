@@ -1,0 +1,30 @@
+[
+  {
+    "code": "SPRING10",
+    "description": "10% off all dishes during the Spring season",
+    "discount_percentage": 10,
+    "valid_until": "2025-06-01T23:59:59",
+    "promotion_id": 1
+  },
+  {
+    "code": "FIRSTORDER15",
+    "description": "15% discount on your first order",
+    "discount_percentage": 15,
+    "valid_until": "2025-12-31T23:59:59",
+    "promotion_id": 2
+  },
+  {
+    "code": "FLASH5",
+    "description": "5% off all pasta dishes this weekend only",
+    "discount_percentage": 5,
+    "valid_until": "2025-05-05T23:59:59",
+    "promotion_id": 3
+  },
+  {
+    "code": "BIGSPENDER20",
+    "description": "Spend $50+ and get 20% off",
+    "discount_percentage": 20,
+    "valid_until": "2025-07-01T23:59:59",
+    "promotion_id": 4
+  }
+]
