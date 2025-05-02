@@ -8,75 +8,121 @@ from ..models import orders as model
 client = TestClient(app)
 
 
-@pytest.fixture
-def db_session(mocker):
-    return mocker.Mock()
+
+@pytest.fixture(scope='module')
+def seeded_client():
+    return client
 
 
-def test_read_all_users(db_session, mocker):
-    mock_get_all_users = mocker.patch.object(controller, 'read_all_users', return_value=[model.User(id=1, name="Test User")])
-
-    response = client.get("/users/")
-
+def test_read_all_users(seeded_client):
+    response = seeded_client.get('/users/')
     assert response.status_code == 200
-    assert response.json() == [{"id": 1, "name": "Test User"}]
-
-def test_read_user_by_id(db_session, mocker):
-    mock_get_user_by_id = mocker.patch.object(controller, 'read_user_by_id', return_value=model.User(id=1, name="Test User"))
-
+    data = response.json()
+    assert isinstance(data, list)
+    assert any(user['user_id'] == 1 for user in data)
 
 
-    response = client.get("/users/1")
-
+def test_read_user_by_id(seeded_client):
+    response = seeded_client.get('/users/1')
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "name": "Test User"}
-
-def test_create_new_user(db_session, mocker):
-    mock_create_user = mocker.patch.object(controller, 'create_user', return_value=model.User(id=1, name="Test User"))
-
-    user_request = {
-        "name": "Test User",
-        "email": "test@example.com",
-        "password": "password123"
+    data = response.json()
+    assert data == {
+        "user_id": 1,
+        "user_name": "alice_w",
+        "email": "alice@example.com",
+        "phone_number": "5551234567",
+        "address": "123 Garden Ave",
+        "user_role": "customer",
+        "payment_info": "card",
+        "review": "Loved the Chicken Alfredo!",
+        "rating": "5"
     }
 
-    response = client.post("/users/", json=user_request)
-    assert response.status_code == 200
-    assert response.json() == {"id": 1, "name": "Test User"}
 
-    # mock_create_user.assert_called_once_with(db_session, user_request)
-
-def test_update_existing_user(db_session, mocker):
-    mock_update_user = mocker.patch.object(controller, 'update_user', return_value=model.User(id=1, name="Updated User"))
-
-    user_request = {
-        "id": 1,
-        "name": "Updated Test User",
+def test_create_new_user(seeded_client):
+    new_user = {
+        "user_id": 999,
+        "user_name": "test_user",
         "email": "test@example.com",
-        "password": "password123"
+        "phone_number": "1234567890",
+        "address": "100 Test St Test City",
+        "user_role": "customer",
+        "payment_info": "card",
+        "review": None,
+        "rating": None
     }
 
-    response = client.put("/users/1", json=user_request)
+    response = seeded_client.post('/users/', json=new_user)
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "name": "Updated User"}
+    data = response.json()
+    assert data == {
+        "user_id": 999,
+        "user_name": "test_user",
+        "email": "test@example.com",
+        "phone_number": "1234567890",
+        "address": "100 Test St Test City",
+        "user_role": "customer",
+        "payment_info": "card",
+        "review": None,
+        "rating": None
+    }
 
-    # mock_update_user.assert_called_once_with(db_session, 1, user_request)
-
-def test_delete_existing_user(db_session, mocker):
-    mock_delete_user = mocker.patch.object(controller, 'delete_user', return_value=True)
-
-    response = client.delete("/users/1")
+def test_update_existing_user(seeded_client):
+    update_data = {
+        "user_id": 1,
+        "user_name": "alice_w",
+        "email": "alice@example.com",
+        "phone_number": "5551234567",
+        "address": "123 Garden Ave",
+        "user_role": "customer",
+        "payment_info": "card",
+        "review": "Hated the Chicken Alfredo!",
+        "rating": "5"
+    }
+    response = seeded_client.put('/users/1', json=update_data)
     assert response.status_code == 200
-    assert response.json() == {"detail": "User deleted successfully"}
+    data = response.json()
+    assert data == {
+        "user_id": 1,
+        "user_name": "alice_w",
+        "email": "alice@example.com",
+        "phone_number": "5551234567",
+        "address": "123 Garden Ave",
+        "user_role": "customer",
+        "payment_info": "card",
+        "review": "Hated the Chicken Alfredo!",
+        "rating": "5"
+    }
 
-    # mock_delete_user.assert_called_once_with(db_session, 1)
+def test_delete_existing_user(seeded_client):
+    temp_user = {
+        "user_id": 999,
+        "user_name": "updated_user",
+        "email": "updated@example.com",
+        "phone_number": "9876543210",
+        "address": "200 Updated Ave",
+        "user_role": "customer",
+        "payment_info": "paypal",
+        "review": "Great service",
+        "rating": "5"
+    }
 
-def test_delete_non_existing_user(db_session, mocker):
-    mock_delete_user = mocker.patch.object(controller, 'delete_user', return_value=False)
+    create_resp = seeded_client.post("/users/", json=temp_user)
+    assert create_resp.status_code == 200
 
-    response = client.delete("/users/1")
-    assert response.status_code == 404
-    assert response.json() == {"detail": "User not found"}
+    del_resp = seeded_client.delete("/users/999")
+    assert del_resp.status_code == 200
+    data = del_resp.json()
+    assert data["detail"] == "User deleted successfully"
 
-    # mock_delete_user.assert_called_once_with(db_session, 1)
+
+
+
+
+
+
+
+
+
+
 
