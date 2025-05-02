@@ -9,61 +9,100 @@ from ..models.payment import Payment
 client = TestClient(app)
 
 
-@pytest.fixture
-def db_session(mocker):
-    return mocker.Mock()
+@pytest.fixture(scope='module')
+def seeded_client():
+    return client
 
 
-def test_read_all_payments(db_session, mocker):
-    mock_get_all_payments = mocker.patch.object(controller, 'read_all_payments', return_value=[Payment(id=1, order_id=1, amount=100.0)])
-
-    response = client.get("/payments/")
-
+def test_read_all_payments(seeded_client):
+    response = seeded_client.get("/payments/")
     assert response.status_code == 200
-    assert response.json() == [{"id": 1, "order_id": 1, "amount": 100.0}]
+    assert isinstance(response.json(), list)
+    assert len(response.json()) > 0
 
 
-def test_read_payment_by_id(db_session, mocker):
-    mock_get_payment_by_id = mocker.patch.object(controller, 'read_payment', return_value=Payment(id=1, order_id=1, amount=100.0))
 
-    response = client.get("/payments/1")
 
+def test_read_payment_by_id(seeded_client):
+    response = seeded_client.get("/payments/1")
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "order_id": 1, "amount": 100.0}
-
-
-def test_create_new_payment(db_session, mocker):
-    mock_create_payment = mocker.patch.object(controller, 'create_new_payment', return_value=Payment(id=1, order_id=1, amount=100.0))
-
-    payment_request = {
-        "order_id": 1,
-        "payment_method": "credit_card",
-        "amount": 100.0
-    }
-
-    response = client.post("/payments/", json=payment_request)
-    assert response.status_code == 200
-    assert response.json() == {"id": 1, "order_id": 1, "amount": 100.0}
-
-def test_update_existing_payment(db_session, mocker):
-    mock_update_payment = mocker.patch.object(controller, 'update_existing_payment', return_value=Payment(id=1, order_id=1, amount=100.0))
-
-    payment_request = {
+    assert isinstance(response.json(), dict)
+    assert response.json() == {
+        "user_id": 1,
+        "promotion_id": 1,
+        "amount": 12.6,
         "payment_id": 1,
-        "order_id": 1,
-        "payment_method": "cash",
+        "created_at": "2025-05-01T21:19:21"
+    }
+
+
+
+def test_create_new_payment(seeded_client):
+    payment_request = {
+        "user_id": 1,
+        "promotion_id": 1,
         "amount": 100.0
     }
 
-    response = client.put("/payments/1", json=payment_request)
+    response = seeded_client.post("/payments/", json=payment_request)
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "order_id": 1, "amount": 100.0}
+    data = response.json()
+    assert isinstance(data, dict)
+    assert "promotion_id" in data
+    assert data["user_id"] == 1
+    assert data["payment_id"] == 5
+    assert data["amount"] == 100.0
+    assert "created_at" in data
 
 
-def test_delete_payment(db_session, mocker):
-    mock_delete_payment = mocker.patch.object(controller, 'delete_payment', return_value=True)
 
-    response = client.delete("/payments/1")
+
+def test_update_existing_payment(seeded_client):
+    payment_update = {
+        "user_id": 1,
+        "promotion_id": 2,
+        "amount": 200.0
+    }
+
+    response = seeded_client.put("/payments/1", json=payment_update)
     assert response.status_code == 200
-    assert response.json() == {"detail": "Payment deleted successfully"}
+    data = response.json()
+    assert isinstance(data, dict)
+    assert data["user_id"] == 1
+    assert data["promotion_id"] == 2
+    assert data["payment_id"] == 1
+    assert data["amount"] == 200.0
+    assert "created_at" in data
+
+
+
+def test_delete_payment(seeded_client):
+
+    payment_request = {
+        "user_id": 1,
+        "promotion_id": 1,
+        "amount": 100.0
+    }
+
+    response = seeded_client.post("/payments/", json=payment_request)
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, dict)
+
+    response = seeded_client.delete(f"/payments/{data['payment_id']}")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, dict)
+    assert data["user_id"] == 1
+    assert data["promotion_id"] == 1
+    assert data["payment_id"] == 5
+    assert data["amount"] == 100.0
+    assert "created_at" in data
+
+    response = seeded_client.get(f"/payments/{data['payment_id']}")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Payment not found"}
+
+
+
 
