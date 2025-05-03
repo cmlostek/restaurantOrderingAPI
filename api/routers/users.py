@@ -3,10 +3,8 @@ from sqlalchemy.orm import Session
 
 from api.controllers.order_details import update_order_detail
 from api.controllers.users import get_all_users, get_user_by_id, create_user, update_user, delete_user
-from api.schemas.order_details import OrderDetail
 
 from ..schemas.users import usersSchema
-from ..schemas.order_details import OrderDetail
 from api.dependencies.database import get_db
 
 router = APIRouter(

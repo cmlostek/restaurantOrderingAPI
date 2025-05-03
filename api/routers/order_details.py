@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from api.controllers.order_details import get_all_order_details, update_order_detail, create_new_order_detail, \
     delete_order_detail, get_order_detail_by_id, delete_all_order_details
 
-from ..schemas.order_details import OrderDetail
+from ..schemas.order_details import OrderDetailCreate as OrderDetail
+from ..schemas.order_details import OrderDetailResponse
 from api.dependencies.database import get_db
 
 
@@ -13,21 +14,21 @@ router = APIRouter(
     tags=["order_details"]
 )
 
-@router.get("/", response_model=list[OrderDetail])
+@router.get("/", response_model=list[OrderDetailResponse])
 def get_order_details(order_id: int, db: Session = Depends(get_db)):
     order_details = get_all_order_details(db, order_id)
     if not order_details:
         raise HTTPException(status_code=404, detail=f"Order with ID {order_id} not found")
     return order_details
 
-@router.post("/", response_model=OrderDetail)
+@router.post("/", response_model=OrderDetailResponse)
 def create_order_detail(request: OrderDetail, order_id: int, db: Session = Depends(get_db)):
     order_detail = create_new_order_detail(db, order_id, request)
     if not order_detail:
         raise HTTPException(status_code=400, detail="Failed to create order detail")
     return order_detail
 
-@router.get ("/{detail_id}", response_model=OrderDetail)
+@router.get ("/{detail_id}", response_model=OrderDetailResponse)
 def get_order_detail(order_id: int, detail_id: int, db: Session = Depends(get_db)):
     order_detail = get_order_detail_by_id(db, order_id, detail_id)
     if not order_detail:
@@ -36,7 +37,7 @@ def get_order_detail(order_id: int, detail_id: int, db: Session = Depends(get_db
 
 
 
-@router.put("/{detail_id}", response_model=OrderDetail)
+@router.put("/{detail_id}", response_model=OrderDetailResponse)
 def update_order_detail_route(
         order_id: int,
         detail_id: int,
@@ -53,7 +54,7 @@ def update_order_detail_route(
 
     return order_detail
 
-@router.delete("/{detail_id}", response_model=OrderDetail)
+@router.delete("/{detail_id}", response_model=OrderDetailResponse)
 def delete_order_detail_route(
         order_id: int,
         detail_id: int,
@@ -71,7 +72,7 @@ def delete_order_detail_route(
 
 
 
-@router.delete("/", response_model=list[OrderDetail])
+@router.delete("/", response_model=list[OrderDetailResponse])
 def delete_all_order_details_route(
         order_id: int,
         db: Session = Depends(get_db)

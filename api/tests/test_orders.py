@@ -16,7 +16,6 @@ def seeded_client():
 def test_create_new_order(seeded_client):
 
     order_request = {
-        "order_id": 999,
         "user_id": 1,
         "dish_id": 1,
         "order_date": "2025-05-01T21:19:21",
@@ -38,7 +37,6 @@ def test_create_new_order(seeded_client):
 
     # guest order
     order_request_guest = {
-        "order_id": 69,
         "user_id": None,
         "dish_id": 1,
         "order_date": "2025-05-01T21:19:21",
@@ -68,7 +66,6 @@ def test_read_all_orders(seeded_client):
 
 def test_update_existing_order(seeded_client):
     order_update = {
-        "order_id": 1,
         "user_id": 1,
         "dish_id": 2,
         "order_date": "2025-05-01T21:19:21",
@@ -92,7 +89,6 @@ def test_update_existing_order(seeded_client):
 
 def test_delete_existing_order(seeded_client):
     order_request = {
-        "order_id": 999,
         "user_id": 1,
         "dish_id": 1,
         "order_date": "2025-05-01T21:19:21",
