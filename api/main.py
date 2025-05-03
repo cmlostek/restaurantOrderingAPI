@@ -22,7 +22,7 @@ origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["http://localhost:5173", origins], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,3 +34,5 @@ indexRoute.load_routes(app)
 
 if __name__ == "__main__":
     uvicorn.run(app, host=conf.app_host, port=conf.app_port)
+
+    
