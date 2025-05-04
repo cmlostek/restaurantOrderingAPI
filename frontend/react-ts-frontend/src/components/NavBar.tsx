@@ -36,6 +36,7 @@ export default function NavBar() {
           {renderLink('/', 'Home')}
           {renderLink('/menu', 'Menu')}
           {renderLink('/order', 'Order')}
+          {renderLink('/team', 'Team')}
           {user?.user_role === 'customer' && renderLink('/customer', 'My Orders')}
           {user?.user_role === 'admin' && renderLink('/admin', 'Admin Dashboard')}
         </nav>

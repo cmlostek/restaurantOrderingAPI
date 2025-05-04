@@ -10,6 +10,8 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import AdminDashboard from './components/AdminDashboard';
 import CustomerDashboard from './components/CustomerDashboard';
+import Team from './components/Team';
+import Footer from './components/Footer';
 
 const App: React.FC = () => (
   <Router>
@@ -21,6 +23,7 @@ const App: React.FC = () => (
         <Route path="/order" element={<Order />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/team" element={<Team/>}></Route>
 
         <Route
           path="/customer"
@@ -41,8 +44,10 @@ const App: React.FC = () => (
 
         {/* catch-all */}
         <Route path="*" element={<Home />} />
+        {/* <Route path="/404" element={<div>404 Not Found</div>} /> */}
       </Routes>
   </AuthProvider>
+    <Footer></Footer>
     </Router>
 );
 

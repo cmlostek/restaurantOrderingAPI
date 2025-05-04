@@ -133,7 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="bg-red-600 text-white py-8">
         <div className="container mx-auto px-6 md:px-12 text-center">
           <p className="mb-4">© {new Date().getFullYear()} Hungry Cow. All rights reserved.</p>
@@ -143,7 +143,7 @@ export default function Home() {
             <Link to="/order" className="hover:underline">Order</Link>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }
