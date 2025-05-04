@@ -2,16 +2,14 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-from ..models.users import  User as model # SQLAlchemy User model
-from ..schemas.users import usersSchema as User# Pydantic schema
-from ..models.payment import Payment as payments # SQLAlchemy Payment model
+from ..models.users import  User as model 
+from ..schemas.users import usersCreate as User
+from ..models.payment import Payment as payments 
 
 
 def create_user(db: Session, request: User):
 
     new_user = model(
-        user_id=request.user_id,
-        # payment_id=payment_object.payment_id,
         user_name=request.user_name,
         email=request.email,
         phone_number=request.phone_number,
