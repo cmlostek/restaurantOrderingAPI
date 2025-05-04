@@ -16,7 +16,6 @@ import Order from './components/Order';
 import Team from './components/Team';
 import Login from './components/Login';
 import Signup from './components/SignUp';
-import NavBar from './components/NavBar';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -131,7 +130,7 @@ const App: React.FC = () => (
     <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
       <Header />
 
-      <main className="flex-grow container mx-auto p-6">
+      <main className="">
         <AnimatedRoutes />
       </main>
 
