@@ -42,7 +42,7 @@ export default function CustomerDashboard() {
         setError("Failed to load your orders.");
       })
       .finally(() => {
-        setLoading(false);
+        setLoading(false); 
       });
   }, [user]);
 
