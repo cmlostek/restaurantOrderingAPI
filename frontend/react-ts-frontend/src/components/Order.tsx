@@ -1,7 +1,7 @@
-// src/pages/OrderPage.tsx
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 interface Dish {
   dish_id: number;
@@ -37,6 +37,7 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(false);
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [message, setMessage] = useState<string>("");
+  const {user} = useAuth();
 
   useEffect(() => {
     // load menu
@@ -80,10 +81,11 @@ export default function OrderPage() {
       }
     }
 
+    const userId = user ? user.user_id : null;
     try {
       // 1) create order
       const orderRes = await axios.post("http://localhost:8000/orders/", {
-        user_id: null,
+        user_id:  userId,
         dish_id: selectedDishId,
         order_date: new Date().toISOString(),
         total_price: parseFloat(finalPrice.toFixed(2)),
