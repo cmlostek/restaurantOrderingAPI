@@ -130,7 +130,7 @@ const App: React.FC = () => (
     <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
       <Header />
 
-      <main className="">
+      <main className="flex-grow w-full">
         <AnimatedRoutes />
       </main>
 
