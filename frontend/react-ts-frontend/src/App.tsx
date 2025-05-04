@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Menu from "./components/Menu";
+import Order from "./components/Order";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/menu" element={<Menu />} />
-            {/* <Route path="/order" element={<Order />} /> */}
+            <Route path="/order" element={<Order />} />
             {/* <Route path="/team" element={<Team />} /> */}
           </Routes>
         </main>
