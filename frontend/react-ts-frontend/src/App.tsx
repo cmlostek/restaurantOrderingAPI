@@ -8,14 +8,18 @@ import {
 } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './components/Home';
-import Menu from './components/Menu';
-import Order from './components/Order';
-import Team from './components/Team';
-import Login from './components/Login';
-import Signup from './components/SignUp';
+import { AuthProvider } from './components/AuthContext';
+
+import Header            from './components/Header';
+import Footer            from './components/Footer';
+import Home              from './components/Home';
+import Menu              from './components/Menu';
+import Order             from './components/Order';
+import Team              from './components/Team';
+import Login             from './components/Login';
+import SignUp            from './components/SignUp';
+import CustomerDashboard from './components/CustomerDashboard';
+import AdminDashboard    from './components/AdminDashboard';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -32,110 +36,62 @@ function AnimatedRoutes() {
   const location = useLocation();
 
   return (
-    <AnimatePresence>
-
+    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
+        <Route path="/"      element={<PageWrapper><Home/></PageWrapper>} />
+        <Route path="/menu"  element={<PageWrapper><Menu/></PageWrapper>} />
+        <Route path="/order" element={<PageWrapper><Order/></PageWrapper>} />
+        <Route path="/team"  element={<PageWrapper><Team/></PageWrapper>} />
+
+        {/* auth */}
+        <Route path="/login"  element={<PageWrapper><Login/></PageWrapper>} />
+        <Route path="/signup" element={<PageWrapper><SignUp/></PageWrapper>} />
+
+        {/* dashboards */}
         <Route
-          path="/"
-          element={
-            <motion.div
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <Home />
-            </motion.div>
-          }
+          path="/customer"
+          element={<PageWrapper><CustomerDashboard/></PageWrapper>}
         />
         <Route
-          path="/menu"
-          element={
-            <motion.div
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <Menu />
-            </motion.div>
-          }
+          path="/admin"
+          element={<PageWrapper><AdminDashboard/></PageWrapper>}
         />
-        <Route
-          path="/order"
-          element={
-            <motion.div
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <Order />
-            </motion.div>
-          }
-        />
-        <Route
-          path="/team"
-          element={
-            <motion.div
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <Team />
-            </motion.div>
-          }
-        />
-        {/* 🔥 Add these two back in: */}
-        <Route
-          path="/login"
-          element={
-            <motion.div
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <Login />
-            </motion.div>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <motion.div
-              initial="initial"
-              animate="in"
-              exit="out"
-              variants={pageVariants}
-              transition={pageTransition}
-            >
-              <Signup />
-            </motion.div>
-          }
-        />
+
+        {/* fallback */}
+        <Route path="*" element={<PageWrapper><Home/></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
 }
 
+function PageWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      className="w-full h-full"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 const App: React.FC = () => (
   <Router>
-    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
-      <Header />
+    <AuthProvider>
+      <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+        <Header />
 
-      <main className="flex-grow w-full">
-        <AnimatedRoutes />
-      </main>
+        <main className="flex-grow w-full">
+          <AnimatedRoutes />
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </AuthProvider>
   </Router>
 );
 

@@ -13,6 +13,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log('handleSubmit', username);
     e.preventDefault();
     setError('');
     try {

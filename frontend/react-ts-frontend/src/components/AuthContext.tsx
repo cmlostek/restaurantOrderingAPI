@@ -28,10 +28,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (username: string) => {
     // fetch all users, match by username
     const res = await axios.get<User[]>('http://localhost:8000/users/');
-    const found = res.data.find(u => u.user_name === username);
+    // console.log('res', res.data);
+    const found = res.data.find(u => u.user_name === username)
+    
+    
 
 
     if (found) {
+      
       setUser(found);
       localStorage.setItem('user', JSON.stringify(found));
 
