@@ -41,7 +41,6 @@ def test_read_user_by_id(seeded_client):
 
 def test_create_new_user(seeded_client):
     new_user = {
-        "user_id": 999,
         "user_name": "test_user",
         "email": "test@example.com",
         "phone_number": "1234567890",
@@ -55,17 +54,16 @@ def test_create_new_user(seeded_client):
     response = seeded_client.post('/users/', json=new_user)
     assert response.status_code == 200
     data = response.json()
-    assert data == {
-        "user_id": 999,
-        "user_name": "test_user",
-        "email": "test@example.com",
-        "phone_number": "1234567890",
-        "address": "100 Test St Test City",
-        "user_role": "customer",
-        "payment_info": "card",
-        "review": None,
-        "rating": None
-    }
+    assert "user_id" in data
+    assert data["user_name"] == "test_user"
+    assert data["email"] == "test@example.com"
+    assert data["phone_number"] == "1234567890"
+    assert data["address"] == "100 Test St Test City"
+    assert data["user_role"] == "customer"
+    assert data["payment_info"] == "card"
+    assert data["review"] is None
+    assert data["rating"] is None
+
 
 def test_update_existing_user(seeded_client):
     update_data = {
@@ -96,7 +94,6 @@ def test_update_existing_user(seeded_client):
 
 def test_delete_existing_user(seeded_client):
     temp_user = {
-        "user_id": 999,
         "user_name": "updated_user",
         "email": "updated@example.com",
         "phone_number": "9876543210",
@@ -110,7 +107,7 @@ def test_delete_existing_user(seeded_client):
     create_resp = seeded_client.post("/users/", json=temp_user)
     assert create_resp.status_code == 200
 
-    del_resp = seeded_client.delete("/users/999")
+    del_resp = seeded_client.delete(f"/users/{create_resp.json()['user_id']}")
     assert del_resp.status_code == 200
     data = del_resp.json()
     assert data["detail"] == "User deleted successfully"

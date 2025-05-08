@@ -7,7 +7,7 @@ from starlette import status
 
 from ..models.orders import Order
 from api.models import resources as res_model, menu as menu_model, orders as order_model
-from ..schemas.orders import OrderSchema
+from ..schemas.orders import OrderCreate as OrderSchema
 
 def create_order(db: Session, request: OrderSchema):
     # 1) Fetch and validate the dish
@@ -55,6 +55,12 @@ def update_order(db: Session, order_id: int, request: OrderSchema):
         db.refresh(order)
     return order
 
+def read_order(db: Session, order_id: int):
+    order = db.query(Order).filter(Order.order_id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return order
+
 def delete_order(db: Session, order_id: int):
     order = db.query(Order).filter(Order.order_id == order_id).first()
     if order:
@@ -65,18 +71,12 @@ def delete_order(db: Session, order_id: int):
 def get_order_by_date(db: Session, order_date: str):
     return db.query(Order).filter(Order.order_date == order_date).all()
 
+
+
 def filter_order_dates(db: Session, start_date: date, end_date: date):
     start_dt = datetime.combine(start_date, time.min)
-    end_dt = datetime.combine(end_date, time.max)
-
-    orders = (
-        db.query(Order)
-        .filter(and_(
-            Order.order_date >= start_dt,
-            Order.order_date <= end_dt
-        ))
-        .all()
-    )
-    if not orders:
-        raise HTTPException(404, f"No orders between {start_date} and {end_date}")
-    return orders
+    end_dt   = datetime.combine(end_date,   time.max)
+    return db.query(Order)\
+             .filter(Order.order_date >= start_dt,
+                     Order.order_date <= end_dt)\
+             .all()

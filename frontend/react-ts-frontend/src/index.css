@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  :root {
+    --bg: #f8fafc;   /* light bg */
+    --text: #1f2937; /* dark text */
+  }
+  
+  .dark-mode {
+    --bg: #1f2937;   /* dark bg */
+    --text: #f8fafc; /* light text */
+  }
+  
+  /* optional: smooth transition */
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }

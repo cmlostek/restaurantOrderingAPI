@@ -12,7 +12,8 @@ from ..controllers.orders import (
     delete_order, filter_order_dates,
 )
 from ..models.orders import Order
-from ..schemas.orders import OrderSchema
+from ..schemas.orders import OrderCreate as OrderSchema
+from ..schemas.orders import OrderResponse
 from ..dependencies.database import get_db
 
 router = APIRouter(
@@ -20,33 +21,44 @@ router = APIRouter(
     tags=["orders"]
 )
 
-@router.post("/", response_model=OrderSchema)
+@router.post("/", response_model=OrderResponse)
 def create_new_order(request: OrderSchema, db: Session = Depends(get_db)):
     return create_order(db, request)
 
-@router.get("/", response_model=list[OrderSchema])
+@router.get("/", response_model=list[OrderResponse])
 def read_all_orders(db: Session = Depends(get_db)):
     return get_all_orders(db)
 
 
-@router.put("/{order_id}", response_model=OrderSchema)
+@router.get("/by-range", response_model=List[OrderResponse])
+def read_orders_by_range(
+    start_date: date = Query(..., description="YYYY-MM-DD"),
+    end_date:   date = Query(..., description="YYYY-MM-DD"),
+    db: Session   = Depends(get_db),
+):
+    return filter_order_dates(db, start_date, end_date)
+
+
+@router.get("/{order_id}", response_model=OrderResponse)
+def read_order(order_id: int, db: Session = Depends(get_db)):
+    order = get_order_by_id(db, order_id)
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return order
+
+
+@router.put("/{order_id}", response_model=OrderResponse)
 def update_existing_order(order_id: int, request: OrderSchema, db: Session = Depends(get_db)):
     order = update_order(db, order_id, request)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
 
-@router.delete("/{order_id}", response_model=OrderSchema)
+@router.delete("/{order_id}", response_model=OrderResponse)
 def delete_existing_order(order_id: int, db: Session = Depends(get_db)):
     order = delete_order(db, order_id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
 
-@router.get("/by-range", response_model=List[OrderSchema])
-def read_orders_by_range(
-    start_date: date = Query(..., description="YYYY-MM-DD"),
-    end_date:   date = Query(..., description="YYYY-MM-DD"),
-    db: Session = Depends(get_db),
-):
-    return filter_order_dates(db, start_date, end_date)
+
