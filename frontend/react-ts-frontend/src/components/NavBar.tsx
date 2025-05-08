@@ -1,5 +1,5 @@
 // src/components/NavBar.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -25,13 +25,11 @@ export default function NavBar() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-16 items-center">
           {/* Brand */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="text-2xl font-bold text-red-600">
-              Hungry Cow
-            </Link>
-          </div>
+          <Link to="/" className="text-2xl font-bold text-red-600">
+            Hungry Cow
+          </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex md:space-x-4 md:items-center">
@@ -40,6 +38,18 @@ export default function NavBar() {
                 {label}
               </NavLink>
             ))}
+
+            {/* role‐based dashboards */}
+            {user?.user_role === 'customer' && (
+              <NavLink to="/customer" className={linkClasses}>
+                My Orders
+              </NavLink>
+            )}
+            {user?.user_role === 'admin' && (
+              <NavLink to="/admin" className={linkClasses}>
+                Admin Dashboard
+              </NavLink>
+            )}
           </div>
 
           {/* Auth buttons desktop */}
@@ -53,10 +63,16 @@ export default function NavBar() {
               </button>
             ) : (
               <>
-                <NavLink to="/login" className="text-sm font-medium text-gray-700 hover:text-red-600 transition">
+                <NavLink
+                  to="/login"
+                  className="text-sm font-medium text-gray-700 hover:text-red-600 transition"
+                >
                   Login
                 </NavLink>
-                <NavLink to="/signup" className="px-3 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition">
+                <NavLink
+                  to="/signup"
+                  className="px-3 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition"
+                >
                   Sign Up
                 </NavLink>
               </>
@@ -84,10 +100,35 @@ export default function NavBar() {
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {links.map(({ to, label }) => (
-              <NavLink key={to} to={to} className={linkClasses} onClick={() => setMobileOpen(false)}>
+              <NavLink
+                key={to}
+                to={to}
+                className={linkClasses}
+                onClick={() => setMobileOpen(false)}
+              >
                 {label}
               </NavLink>
             ))}
+
+            {/* role‐based dashboards */}
+            {user?.user_role === 'customer' && (
+              <NavLink
+                to="/customer"
+                className={linkClasses}
+                onClick={() => setMobileOpen(false)}
+              >
+                My Orders
+              </NavLink>
+            )}
+            {user?.user_role === 'admin' && (
+              <NavLink
+                to="/admin"
+                className={linkClasses}
+                onClick={() => setMobileOpen(false)}
+              >
+                Admin Dashboard
+              </NavLink>
+            )}
 
             {user ? (
               <button
