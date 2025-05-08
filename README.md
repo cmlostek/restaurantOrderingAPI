@@ -1,6 +1,4 @@
-
-  
-A FastAPI-based backend for managing a restaurant’s operations: menus, ingredients, orders, payments, promotions, and customer reviews. The database is dropped, recreated, and automatically populated on each application start from JSON seed files.
+A FastAPI-based project for managing a restaurant's operations: menus, ingredients, orders, payments, promotions, and customer reviews. The database is dropped, recreated, and automatically populated on each application start from JSON seed files.
 
 ---
 
@@ -25,27 +23,39 @@ A FastAPI-based backend for managing a restaurant’s operations: menus, ingredi
 
 ## **Overview**
 
-  
-
 This API serves as the backend for an online restaurant ordering system. It allows:
 
 - **Menu management** with dish definitions and ingredient associations
-    
 - **Inventory tracking** of resources (ingredients)
-    
 - **Order processing** for registered users and guests
-    
 - **Payment recording** and optional promotions
-    
 - **Order detail** items (e.g., special instructions)
-    
 - **Customer reviews** linked to orders
-    
 - **Revenue reporting** by date
-    
-
 
 Data is persisted in a MySQL database through SQLAlchemy, with Pydantic schemas enforcing payload and response models.
+
+---
+
+## **Work in Progress**
+
+The following features are currently being developed or planned for future releases:
+
+- **Resource Management in Dashboard:**
+  - Add, edit, and remove resources (ingredients) directly from the admin dashboard for easier inventory control.
+- **Customer Points / Loyalty System:**
+  - Implement a points or rewards system for customers based on their order history.
+  - Allow customers to redeem points for discounts or special offers.
+- **Review System Enhancements:**
+  - Enable customers to leave reviews for dishes and orders.
+  - Display reviews and ratings on the customer dashboard and menu pages.
+- **Improved Admin & Customer Dashboards:**
+  - More analytics, order history, and management tools for admins.
+  - Enhanced order tracking and personalized recommendations for customers.
+- **UI/UX Improvements:**
+  - Ongoing improvements to the frontend for a smoother and more intuitive user experience.
+
+If you have suggestions or want to contribute to these features, please see the [Contributing](#contributing) section below.
 
 ---
 
@@ -85,17 +95,24 @@ Data is persisted in a MySQL database through SQLAlchemy, with Pydantic schemas 
 
 1. **Clone the repository**
 
-```
+```bash
 git clone https://github.com/cmlostek/itsc3155_GroupProject.git
 cd api
 ```
 
-
 1. **Create and activate** a virtual environment
 
-```
+**On macOS/Linux:**
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
+**On Windows:**
+```bash
+cd itsc3155_GroupProject/api
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
 2. **Install dependencies**
@@ -154,9 +171,34 @@ No additional migration or manual seeding steps are required.
 uvicorn api.main:app --reload
 ```
 
-- **Swagger UI**:  http://127.0.0.1:8000/docs
-- **ReDoc**:        http://127.0.0.1:8000/redoc
+- **Swagger UI**:  http://127.0.0.1:8000/docs
+- **ReDoc**:       http://127.0.0.1:8000/redoc
     
+---
+
+## **Running the Frontend**
+
+The frontend is a React app located in `frontend/react-ts-frontend`.
+
+### **Prerequisites**
+- [Node.js](https://nodejs.org/) (v16 or later recommended)
+
+### **Steps**
+1. Open a new terminal window.
+2. Change directory to the frontend folder:
+   ```
+   cd frontend/react-ts-frontend
+   ```
+3. Install dependencies:
+   ```
+   npm install
+   ```
+4. Start the development server:
+   ```
+   npm run dev
+   ```
+5. The app will be available at the URL printed in the terminal (typically http://localhost:5173/).
+
 ---
 
 ## **API Endpoints**
@@ -255,7 +297,7 @@ uvicorn api.main:app --reload
 ## **Testing**
 
   
-All endpoints are covered by pytest with an autouse fixture that resets and reseeds the database before each test.
+All endpoints are covered by pytest with a feature that resets and reseeds the database before each test.
 - Run all tests:
 
 ```
@@ -283,9 +325,15 @@ pytest tests/test_menu.py
 │   ├── controllers/       # logical functions for routes
 │   ├── routers/           # FastAPI route definitions
 │   └── main.py            # Application entry point
+├── frontend/
+│   └── react-ts-frontend/
+│       ├── src/           # React source code
+│       ├── public/        # Static assets
+│       ├── package.json   # Frontend dependencies
+│       └── ...            # Other frontend files
 ├── tests/                 # pytest modules & fixtures
 ├── seed.py                # Manual seeder script to add items to database 
-├── requirements.txt
+├── requirements.txt       # needed python dependencies 
 └── README.md
 ```
 
