@@ -28,7 +28,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (username: string) => {
     // fetch all users, match by username
     const res = await axios.get<User[]>('http://localhost:8000/users/');
-    // console.log('res', res.data);
     const found = res.data.find(u => u.user_name === username)
     
     
@@ -40,10 +39,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('user', JSON.stringify(found));
 
       navigate(
-        found.user_role === 'admin' ? '/admin' : '/customer',
+        found.user_role.toLowerCase().trim() === 'admin' ? '/admin' : '/customer',
         {state: {message: `Welcome back, ${found.user_name}!`}}
-      )
-        ;
+      );
 
       return;
     }

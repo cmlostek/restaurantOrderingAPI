@@ -18,7 +18,6 @@ export default function Login() {
     setError('');
     try {
       await login(username.trim());
-      navigate('/customer');
     } catch {
       setError('Invalid username. Please try again.');
     }
