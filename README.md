@@ -72,6 +72,8 @@ If you have suggestions or want to contribute to these features, please see the 
 
 ## **Technology Stack**
 
+
+### Backend 
 - **Python 3.9+**
 - **FastAPI** (API framework)
 - **SQLAlchemy** (ORM)
@@ -79,6 +81,12 @@ If you have suggestions or want to contribute to these features, please see the 
 - **Uvicorn** (server)
 - **MySQL** (database)
 - **Pytest** (unit testing)
+
+### Frontend 
+- **React-TypeScript** (Frontend Framework)
+- **Axios** (Used to send and retrieve requests from the server)
+- **Tailwind CSS** (Used for UI styling)
+ 
 
 ---
 ## **Getting Started**
@@ -124,9 +132,10 @@ pip install -r requirements.txt
 
 ### **Configuration**
 
-  
+
 
 Edit the database URL in api/dependencies/config.py:
+(if the file does not exist create the `config.py` file within the api/dependencies directory)
 
 ```Python
 class conf:  

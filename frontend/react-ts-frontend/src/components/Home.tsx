@@ -132,18 +132,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer
-      <footer className="bg-red-600 text-white py-8">
-        <div className="container mx-auto px-6 md:px-12 text-center">
-          <p className="mb-4">© {new Date().getFullYear()} Hungry Cow. All rights reserved.</p>
-          <div className="space-x-4">
-            <Link to="/" className="hover:underline">Home</Link>
-            <Link to="/menu" className="hover:underline">Menu</Link>
-            <Link to="/order" className="hover:underline">Order</Link>
-          </div>
-        </div>
-      </footer> */}
     </div>
   );
 }
