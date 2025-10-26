@@ -9,11 +9,15 @@ import {
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { AuthProvider } from './components/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 import Header            from './components/Header';
 import Footer            from './components/Footer';
 import Home              from './components/Home';
 import Menu              from './components/Menu';
+import Cart              from './components/Cart';
+import Favorites         from './components/Favorites';
 import Order             from './components/Order';
 import Team              from './components/Team';
 import Login             from './components/Login';
@@ -40,6 +44,8 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/"      element={<PageWrapper><Home/></PageWrapper>} />
         <Route path="/menu"  element={<PageWrapper><Menu/></PageWrapper>} />
+        <Route path="/cart" element={<PageWrapper><Cart/></PageWrapper>} />
+        <Route path="/favorites" element={<PageWrapper><Favorites/></PageWrapper>} />
         <Route path="/order" element={<PageWrapper><Order/></PageWrapper>} />
         <Route path="/team"  element={<PageWrapper><Team/></PageWrapper>} />
 
@@ -82,15 +88,19 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
 const App: React.FC = () => (
   <Router>
     <AuthProvider>
-      <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
-        <Header />
+      <CartProvider>
+        <FavoritesProvider>
+          <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+            <Header />
 
-        <main className="flex-grow w-full">
-          <AnimatedRoutes />
-        </main>
+            <main className="flex-grow w-full">
+              <AnimatedRoutes />
+            </main>
 
-        <Footer />
-      </div>
+            <Footer />
+          </div>
+        </FavoritesProvider>
+      </CartProvider>
     </AuthProvider>
   </Router>
 );

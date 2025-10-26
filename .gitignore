@@ -190,3 +190,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.pytest_cache
+.idea/ 
+__pycache__
+

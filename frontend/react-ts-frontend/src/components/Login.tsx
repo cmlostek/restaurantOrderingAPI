@@ -8,6 +8,7 @@ import hungryCowImg from '../assets/hungry_cow.png';
 
 export default function Login() {
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -17,9 +18,9 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      await login(username.trim());
+      await login(username.trim(), password);
     } catch {
-      setError('Invalid username. Please try again.');
+      setError('Invalid username or password. Please try again.');
     }
   };
 
@@ -59,6 +60,17 @@ export default function Login() {
                 onChange={e => setUsername(e.target.value)}
                 required
                 placeholder="Enter your username"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-red-400 transition"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold mb-1">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                placeholder="Enter your password"
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-red-400 transition"
               />
             </div>

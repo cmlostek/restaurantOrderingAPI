@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 export interface User {
   user_id: number;
-  user_name: string;
+  username: string;
   user_role: 'admin' | 'customer' | string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (username: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -25,28 +25,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (stored) setUser(JSON.parse(stored));
   }, []);
 
-  const login = async (username: string) => {
-    // fetch all users, match by username
-    const res = await axios.get<User[]>('http://localhost:8000/users/');
-    const found = res.data.find(u => u.user_name === username)
-    
-    
-
-
-    if (found) {
+  const login = async (username: string, password: string) => {
+    try {
+      // Call the login endpoint with username and password
+      const res = await axios.post('http://localhost:8000/users/login', {
+        username: username.trim(),
+        password: password
+      });
       
-      setUser(found);
-      localStorage.setItem('user', JSON.stringify(found));
+      const found = res.data;
+      
+      if (found) {
+        setUser(found);
+        localStorage.setItem('user', JSON.stringify(found));
 
-      navigate(
-        found.user_role.toLowerCase().trim() === 'admin' ? '/admin' : '/customer',
-        {state: {message: `Welcome back, ${found.user_name}!`}}
-      );
-
-      return;
+        navigate(
+          found.user_role.toLowerCase().trim() === 'admin' ? '/admin' : '/customer',
+          {state: {message: `Welcome back, ${found.username}!`}}
+        );
+        return;
+      }
+      
+      throw new Error('Login failed');
+    } catch (error) {
+      throw new Error('Invalid username or password');
     }
-    // if not found, redirect to signup
-    navigate('/signup');
   };
 
   const logout = () => {

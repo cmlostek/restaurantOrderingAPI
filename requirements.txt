@@ -7,3 +7,5 @@ pytest-mock
 httpx
 cryptography
 prompt_toolkit
+passlib[bcrypt]
+python-jose[cryptography]

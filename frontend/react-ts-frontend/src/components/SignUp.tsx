@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
   const [username,    setUsername]    = useState('');
+  const [password,    setPassword]    = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email,       setEmail]       = useState('');
   const [phone,       setPhone]       = useState('');
   const [address,     setAddress]     = useState('');
@@ -20,9 +22,23 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    
+    // Validate password length
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+    
     try {
       await axios.post('http://localhost:8000/users/', {
-        user_name:    username,
+        username:     username,
+        password:     password,
         email,
         phone_number: phone,
         address,
@@ -33,8 +49,8 @@ export default function SignUp() {
       });
       setSuccess('🎉 Account created successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
-    } catch {
-      setError('Signup failed. Please check your input and try again.');
+    } catch (err: any) {
+      setError(err.response?.data?.detail || 'Signup failed. Please check your input and try again.');
     }
   };
 
@@ -68,6 +84,30 @@ export default function SignUp() {
               onChange={e => setUsername(e.target.value)}
               required
               placeholder="Enter your username"
+              className="w-full rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 px-4 py-2 transition"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-800 font-semibold mb-1">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              placeholder="Enter your password"
+              className="w-full rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 px-4 py-2 transition"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-800 font-semibold mb-1">Confirm Password</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              required
+              placeholder="Confirm your password"
               className="w-full rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 px-4 py-2 transition"
             />
           </div>
