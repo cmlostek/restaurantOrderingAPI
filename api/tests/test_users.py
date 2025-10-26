@@ -28,7 +28,7 @@ def test_read_user_by_id(seeded_client):
     data = response.json()
     assert data == {
         "user_id": 1,
-        "user_name": "alice_w",
+        "username": "alice_w",
         "email": "alice@example.com",
         "phone_number": "5551234567",
         "address": "123 Garden Ave",
@@ -41,7 +41,8 @@ def test_read_user_by_id(seeded_client):
 
 def test_create_new_user(seeded_client):
     new_user = {
-        "user_name": "test_user",
+        "username": "test_user",
+        "password": "testpassword123",
         "email": "test@example.com",
         "phone_number": "1234567890",
         "address": "100 Test St Test City",
@@ -55,7 +56,7 @@ def test_create_new_user(seeded_client):
     assert response.status_code == 200
     data = response.json()
     assert "user_id" in data
-    assert data["user_name"] == "test_user"
+    assert data["username"] == "test_user"
     assert data["email"] == "test@example.com"
     assert data["phone_number"] == "1234567890"
     assert data["address"] == "100 Test St Test City"
@@ -68,7 +69,7 @@ def test_create_new_user(seeded_client):
 def test_update_existing_user(seeded_client):
     update_data = {
         "user_id": 1,
-        "user_name": "alice_w",
+        "username": "alice_w",
         "email": "alice@example.com",
         "phone_number": "5551234567",
         "address": "123 Garden Ave",
@@ -82,7 +83,7 @@ def test_update_existing_user(seeded_client):
     data = response.json()
     assert data == {
         "user_id": 1,
-        "user_name": "alice_w",
+        "username": "alice_w",
         "email": "alice@example.com",
         "phone_number": "5551234567",
         "address": "123 Garden Ave",
@@ -94,7 +95,8 @@ def test_update_existing_user(seeded_client):
 
 def test_delete_existing_user(seeded_client):
     temp_user = {
-        "user_name": "updated_user",
+        "username": "updated_user",
+        "password": "password123",
         "email": "updated@example.com",
         "phone_number": "9876543210",
         "address": "200 Updated Ave",

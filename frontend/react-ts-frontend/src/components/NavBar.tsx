@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useCart } from '../context/CartContext';
+import { useFavorites } from '../context/FavoritesContext';
+import { Bars3Icon, XMarkIcon, ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/outline';
 
 const links = [
   { to: '/',    label: 'Home' },
@@ -13,6 +15,8 @@ const links = [
 
 export default function NavBar() {
   const { user, logout } = useAuth();
+  const { getTotalItems } = useCart();
+  const { getFavoriteCount } = useFavorites();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
@@ -52,8 +56,26 @@ export default function NavBar() {
             )}
           </div>
 
-          {/* Auth buttons desktop */}
+          {/* Cart, Favorites & Auth buttons desktop */}
           <div className="hidden md:flex md:items-center md:space-x-4">
+            <Link to="/favorites" className="relative p-2 text-gray-700 hover:text-red-600 transition">
+              <HeartIcon className="h-6 w-6" />
+              {getFavoriteCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {getFavoriteCount()}
+                </span>
+              )}
+            </Link>
+            
+            <Link to="/cart" className="relative p-2 text-gray-700 hover:text-red-600 transition">
+              <ShoppingCartIcon className="h-6 w-6" />
+              {getTotalItems() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {getTotalItems()}
+                </span>
+              )}
+            </Link>
+            
             {user ? (
               <button
                 onClick={logout}
@@ -129,6 +151,24 @@ export default function NavBar() {
                 Admin Dashboard
               </NavLink>
             )}
+
+            <NavLink
+              to="/favorites"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition"
+              onClick={() => setMobileOpen(false)}
+            >
+              <HeartIcon className="h-5 w-5 mr-2" />
+              Favorites {getFavoriteCount() > 0 && `(${getFavoriteCount()})`}
+            </NavLink>
+            
+            <NavLink
+              to="/cart"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 transition"
+              onClick={() => setMobileOpen(false)}
+            >
+              <ShoppingCartIcon className="h-5 w-5 mr-2" />
+              Cart {getTotalItems() > 0 && `(${getTotalItems()})`}
+            </NavLink>
 
             {user ? (
               <button

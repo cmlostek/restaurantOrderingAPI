@@ -1,7 +1,8 @@
 [
   {
     "user_id": 1,
-    "user_name": "alice_w",
+    "username": "alice_w",
+    "password": "password123",
     "email": "alice@example.com",
     "phone_number": "5551234567",
     "address": "123 Garden Ave",
@@ -12,7 +13,8 @@
   },
   {
     "user_id": 2,
-    "user_name": "chef_mario",
+    "username": "chef_mario",
+    "password": "chefpass456",
     "email": "mario@kitchen.com",
     "phone_number": "5552345678",
     "address": "456 Chef Lane",
@@ -23,7 +25,8 @@
   },
   {
     "user_id": 3,
-    "user_name": "sarah_b",
+    "username": "sarah_b",
+    "password": "sarahpass789",
     "email": "sarah.b@example.org",
     "phone_number": "5559876543",
     "address": "789 Sunset Blvd",
@@ -34,7 +37,8 @@
   },
   {
     "user_id": 4,
-    "user_name": "admin_jake",
+    "username": "admin_jake",
+    "password": "adminpass012",
     "email": "admin@restaurant.com",
     "phone_number": "5550001122",
     "address": "10 Admin St.",

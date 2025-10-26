@@ -12,7 +12,8 @@ user_review = Table(
 class User(Base):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_name = Column(String(100), nullable=False)
+    username = Column(String(100), unique=True, nullable=False)
+    password = Column(String(255), nullable=False)
     email = Column(String(100), unique = True, nullable=False)
     phone_number = Column(String(20), unique=True, nullable=False)
     address = Column(String(200), nullable=False)
